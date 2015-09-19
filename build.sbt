@@ -13,6 +13,7 @@ libraryDependencies ++= Seq(
   specs2 % Test
 )
 
+
 herokuJdkVersion in Compile := "1.8"
 
 herokuAppName in Compile := Map(
