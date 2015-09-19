@@ -1,6 +1,8 @@
 language: scala
 
-script: sbt stage
+script:
+    - sbt test
+    - sbt stage
 
 jdk:
     - oraclejdk8
