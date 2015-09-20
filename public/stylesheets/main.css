@@ -1,0 +1,104 @@
+
+/*
+* GENERAL
+*/
+
+.widget{
+    border: 3px solid #E6EBE6;
+    border-radius:10px;
+    padding:0px;
+}
+
+/*
+* HEADER
+*/
+
+.widget .widget-header{
+    border-top-left-radius:9px;
+    border-top-right-radius:9px;
+    padding-top: 8px;
+    padding-bottom: 3px;
+    text-align:center;
+    color:white;
+    background-color: #00CCFF;
+    font-size:36px;
+}
+
+.widget .widget-header .fa{
+    padding:5px;
+    border: 3px solid white;
+    border-radius: 50%;
+    font-size:0.9em;
+
+}
+
+
+/*
+* BODY
+*/
+
+.widget .widget-body{
+}
+
+.widget .widget-body .subheading{
+    color: #00CCFF;
+    font-size:20px;
+    margin-top: 10px;
+    margin-bottom:10px;
+    text-align:center;
+}
+
+
+.fat-input{
+    padding:8px;
+    border: 2px solid #E6EBE6;
+    border-radius:6px;
+    font-size:15px;
+
+}
+
+/**
+* FOOTER
+*/
+
+.widget .widget-footer{
+    margin-top:15px;
+    margin-bottom:10px;
+    text-align:center;
+}
+
+.btn-search{
+    background: #FF7519;
+    color:white;
+}
+
+.btn-search:hover{
+    color:white;
+}
+
+/**********************************************
+* OTHER
+**********************************************/
+
+/*
+* FONTS
+*/
+
+.font-awesome{
+    font-family:Arial, FontAwesome;
+}
+
+.catamaran{
+    font-family: 'Catamaran', sans-serif;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.raleway{
+font-family: 'Raleway',sans-serif;
+}
+
+.opensans{
+    font-family: 'Open sans', sans-serif;
+}
+
