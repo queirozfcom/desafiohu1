@@ -1,0 +1,189 @@
+#!/usr/bin/env python
+
+import sys
+import os
+import re
+from datetime import date
+
+# convert a csv file into sql insert statements
+# to insert those values into given table and rownames
+def run(inputfile,outputfile,tablename,rownames):
+    if not os.path.isfile(inputfile):
+        raise Exception('\'{0}\' is not a valid filepath'.format(inputfile)) 
+
+    outputfile = relativetoabsolutepath(outputfile)
+
+    if os.path.isfile(outputfile):
+        print('Output file already exists; will overwrite.\n')
+        os.remove(outputfile)
+
+    inputfile = relativetoabsolutepath(inputfile)
+
+    firstline = "insert into {0}({1}) values \n".format(tablename,rownames)
+
+    fout = open(outputfile,'w')
+
+    fout.write(firstline)
+    
+    with(open(inputfile)) as fin:
+        for line in fin:
+            # parse line to 'clean' values
+            outputline = parseline(line)
+            fout.write(outputline)
+
+    # last line will have a trailing comma, but we can remove it by hand
+    # and replace by a semicolon      
+    fout.close()
+
+
+
+
+# takes an input line and returns a line that's fit
+# to be in an sql insert statement
+def parseline(line):
+
+    outputline = '('
+    
+    parts = line.split(',')
+
+    for part in parts:
+        value = part.lstrip().rstrip()
+
+        if isbraziliandate(value):
+            outputline += formatdate(value)
+        elif isboolean(value):
+            outputline += formatboolean(value)    
+        elif isstring(value):
+            outputline += formatstring(value)   
+        else:    
+            outputline += value 
+
+        outputline += ','
+
+    # a trailing comma will be added so we must strip it out   
+    outputline = outputline.rstrip(',')  
+    outputline += '),'    
+    outputline += '\n'    
+    
+    return(outputline)
+
+
+
+
+def usage():
+    message = """
+    
+     Convert a CSV file into an SQL file containing inserts
+
+     Usage: ./csvtosqlinsert <inputfile> <outputdir> <tablename> <rownames>
+
+     Where:
+       <inputfile> is the path to the csv file
+       <outputdir> is the directory where the sql file should be written to
+       <tablename> is the table to use in the inserts
+       <rownames> is a comma-separated list of row names
+
+       """                       
+    print(message)          
+
+
+######################################################
+### FUNCTIONS TO PARSE TEXT INTO POSTGRES-FRIENDLY FORMATS
+######################################################
+
+def isboolean(txt):
+    if txt == '1' or txt == '0':
+        return(True)
+    else:
+        return(False)    
+
+def isbraziliandate(txt):
+
+    brazildatepattern = re.compile("^(\d{1,2})\/(\d{1,2})\/(\d{4})$")
+
+    if brazildatepattern.match(txt):
+        return(True)
+    else:
+        return(False)   
+
+def isstring(txt):
+    # for our purposes, it's a string if it's not a number
+
+    numberpat = re.compile("^\d+$")
+
+    if numberpat.match(txt):
+        return(False)
+    else:
+        return(True)    
+
+
+# encodes a value as postgresql boolean
+def formatboolean(booleanstring):
+    if(booleanstring == '1'):
+        return('TRUE')
+    else:
+        return('FALSE')    
+
+
+# takes a brazilian style date and returns a ISO-date
+# of form yyyy-mm-dd
+def formatdate(braziliandate):
+
+    brazildatepattern = re.compile("^(\d{1,2})\/(\d{1,2})\/(\d{4})$")
+
+    matches = brazildatepattern.match(braziliandate)
+
+    day = matches.group(1)
+    month = matches.group(2)
+    year = matches.group(3)
+
+    dt = date(int(year),int(month),int(day))
+
+    # zero-padded days and months
+    # within single quotes
+    dateiso = "'"+dt.strftime('%Y-%m-%d')+"'"
+
+    return(dateiso)
+
+# adds single quotes around a value
+def formatstring(value):
+
+    # must escape single quotes for postgresql
+    output = re.sub("'","''",value)
+
+    # and add single quotes around (normal sql)
+    output = "'"+value+"'"
+
+    return(output)
+
+
+######################################################
+### HELPER FUNCTIONS
+######################################################    
+
+
+def relativetoabsolutepath(relpath):
+    currentdir = os.path.dirname(os.path.realpath(__file__))
+    absolutepath = currentdir+'/'+relpath
+
+    return(relpath)
+
+
+
+
+
+
+if __name__ == "__main__":
+    args = sys.argv
+
+    if len(args)!=5:
+        usage()
+        sys.exit(1)
+    else:    
+        inputfile = args[1]
+        outputdir = args[2]
+        tablename = args[3]
+        rownames =  args[4]
+
+        run(inputfile,outputdir,tablename,rownames)
+
