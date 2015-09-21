@@ -18,15 +18,12 @@ libraryDependencies += "org.postgresql" % "postgresql" % "9.4-1203-jdbc42"
 
 herokuJdkVersion in Compile := "1.8"
 
-herokuAppName in Compile := Map(
-  "test" -> "desafiohu-felipe-almeida-test",
-  "stg"  -> "desafiohu-felipe-almeida-stage",
-  "prod" -> "desafiohu-felipe-almeida-prod"
-).getOrElse(sys.props("appEnv"), "sheltered-citadel-3631")
+//herokuAppName in Compile := Map(
+//  "test" -> "desafiohu-felipe-almeida-test",
+//  "stg"  -> "desafiohu-felipe-almeida-stage",
+//  "prod" -> "desafiohu-felipe-almeida-prod"
+//).getOrElse(sys.props("appEnv"), "sheltered-citadel-3631")
 
-herokuConfigVars in Compile := Map(
-  "JAVA_OPTS" -> "-Dconfig.resource=prod.conf -Xmx384m -Xss512k -XX:+UseCompressedOops"
-)
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 

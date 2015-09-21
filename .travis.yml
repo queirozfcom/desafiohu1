@@ -1,8 +1,15 @@
 language: scala
 
+addons:
+    postgresql: "9.4"
+
+before_script:
+    - psql -c 'create database desafiohu-felipe-almeida;' -U postgres
+
 script:
     - sbt test
     - sbt stage
+
 
 jdk:
     - oraclejdk8
