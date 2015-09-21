@@ -24,6 +24,8 @@ herokuJdkVersion in Compile := "1.8"
 //  "prod" -> "desafiohu-felipe-almeida-prod"
 //).getOrElse(sys.props("appEnv"), "sheltered-citadel-3631")
 
+javaOptions in Test += "-Dconfig.file=travis.conf"
+
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 

@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/desafiohu-felipe-almeida -Dhttp.port=${PORT} -Dconfig.resource=prod.conf
+web: target/universal/stage/bin/desafiohu-felipe-almeida -Dhttp.port=${PORT} -Dconfig.resource=heroku.conf
