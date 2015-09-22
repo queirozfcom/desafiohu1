@@ -1,3 +1,4 @@
+import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.specs2.mutable._
 import org.specs2.runner._
 import org.junit.runner._
@@ -12,13 +13,19 @@ import play.api.test.Helpers._
 @RunWith(classOf[JUnitRunner])
 class IntegrationSpec extends Specification {
 
+
+
   "Application" should {
 
     "work from within a browser" in new WithBrowser {
 
+      val htmlunitDriver = webDriver.asInstanceOf[HtmlUnitDriver]
+
+      htmlunitDriver.setJavascriptEnabled(false)
+
       browser.goTo("http://localhost:" + port)
 
-      browser.pageSource must contain("+ 170.000 hotéis, pousadas e resorts no mundo todo.")
+      browser.pageSource must contain("170.000 hotéis, pousadas e resorts no mundo todo.")
     }
   }
 }

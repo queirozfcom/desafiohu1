@@ -68,6 +68,8 @@
 }
 
 .btn-search{
+    padding-top:6px;
+    padding-bottom:6px;
     background: #FF7519;
     color:white;
 }
