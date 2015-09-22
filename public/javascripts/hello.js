@@ -1,6 +1,22 @@
 $(document).ready(function(){
 
-console.log("back to js..")
+    $('#search').typeahead({
+        minLength: 3.
+        highlight:true,
+    },
+    {
+        name: 'hotels-data',
+        source
+    }
+    );
+
+    $('#search').focus(function(){
+        $(this).typeahead('open');
+    });
+
+    $('#search').blur(function(){
+        $(this).typeahead('close');
+    });
 
 });
 

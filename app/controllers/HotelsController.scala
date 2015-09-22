@@ -15,7 +15,7 @@ import scala.concurrent.Future
 /**
  * Created by felipe on 19/09/15.
  */
-class HotelsController extends Controller {
+object HotelsController extends Controller {
 
   // create a database handle using Play's configuration for play-slick
   val db = DatabaseConfigProvider.get[JdbcProfile](Play.current).db
