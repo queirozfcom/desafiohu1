@@ -5,7 +5,7 @@ import play.api.db.slick.DatabaseConfigProvider
 import play.api.mvc._
 import slick.driver.JdbcProfile
 
-object Application extends Controller {
+class Application extends Controller {
 
   val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
 

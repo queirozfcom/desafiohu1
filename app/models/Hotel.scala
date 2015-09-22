@@ -31,7 +31,7 @@ object Hotel {
   // this enables us to treat a sql table as if it were a scala list
   val hotels = TableQuery[HotelsTable]
 
-  def findAllByFragment(searchString :String,startDate:Option[String],endDate:Option[String]): Future[Seq[Hotel]] = {
+  def findAllByFragment(searchString :String,startDate:Option[String],endDate:Option[String], limit:Int=10): Future[Seq[Hotel]] = {
 
     val searchStringLowerCase = searchString.toLowerCase
 
@@ -40,8 +40,8 @@ object Hotel {
       // select both hotels that match the given string for their city and
       // for their name
       val actions = for{
-        withName <- hotels.filter(_.name.toLowerCase like s"%$searchStringLowerCase%").result
-        withCity <- hotels.filter(_.city.toLowerCase like s"%$searchStringLowerCase%").result
+        withName <- hotels.filter(_.name.toLowerCase like s"%$searchStringLowerCase%").sortBy(_.name.asc).take(limit).result
+        withCity <- hotels.filter(_.city.toLowerCase like s"%$searchStringLowerCase%").sortBy(_.name.asc).take(limit).result
       } yield(withName,withCity)
 
       db.run(actions).map { pair =>
