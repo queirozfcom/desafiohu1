@@ -78,6 +78,39 @@
     color:white;
 }
 
+
+/**
+* RESULTS-GRID
+*****/
+
+#results-grid{
+    margin-top:10px;
+    border: 3px solid #E6EBE6;
+    border-radius:10px;
+    padding:0px;
+    max-height: 250px;
+    overflow-y:auto;
+}
+
+#results-grid tbody tr th{
+    text-align:center;
+}
+
+#results-title{
+    margin-top:10px;
+    text-align:center;
+    font-weight:bold;
+    font-size:1.3em;
+}
+
+#results-grid thead{
+    border-top-left-radius:9px;
+    border-top-right-radius:9px;
+    padding-bottom: 3px;
+    background-color: #00CCFF;
+}
+
+
 /**********************************************
 * OTHER
 **********************************************/

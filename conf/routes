@@ -7,7 +7,10 @@
 GET     /                           @controllers.HotelsController.index
 
 # HOTELS
-GET /hotels/list                    @controllers.HotelsController.list(searchString:String,startDate:Option[String]=None,endDate:Option[String]=None)
+GET /hotels/list                    @controllers.HotelsController.list(searchString:String)
+
+# AVAILABILITIES
+GET /availabilities/list            @controllers.AvailabilitiesController.list(hotelId:Int,startDate:Option[String]?=None,endDate:Option[String]?=None)
 
 
 # Map static resources from the /public folder to the /assets URL path

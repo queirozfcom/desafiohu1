@@ -15,7 +15,7 @@ import scala.concurrent.Future
 /**
  * Created by felipe on 19/09/15.
  */
-class HotelsController extends Controller {
+class HotelsController extends BaseController {
 
   // create a database handle using Play's configuration for play-slick
   val db = DatabaseConfigProvider.get[JdbcProfile](Play.current).db
@@ -24,16 +24,19 @@ class HotelsController extends Controller {
     Ok(views.html.narrow())
   }
 
-  def list(searchString: String, startDate: Option[String], endDate: Option[String]) =
+  def list(searchString: String) = {
     Action.async(BodyParsers.parse.empty) { request =>
 
-      Hotel.findAllByFragment(searchString, startDate, endDate).flatMap { hotels =>
+      Hotel.findAllByFragment(searchString).flatMap { hotels =>
 
-        val namesAndCities:Seq[JsValue] = hotels.map(hotel => Json.obj( "value" -> (hotel.name + " - " + hotel.city) ) )
+        val namesAndCities: Seq[JsValue] = hotels.map(hotel => Json.obj("id" -> hotel.id, "city" -> hotel.city, "name" -> hotel.name))
 
         val asJson = Json.toJson(namesAndCities)
 
-        Future(Ok(Json.prettyPrint(asJson)))
+        Future(JsonResponse(asJson))
       }
     }
+  }
+
+
 }

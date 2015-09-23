@@ -4,7 +4,7 @@
   width: 200px;
   height: 30px;
   padding: 8px 12px;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 30px;
   border: 2px solid #ccc;
   -webkit-border-radius: 8px;
@@ -12,7 +12,6 @@
           border-radius: 8px;
   outline: none;
 }
-
 
 .typeahead {
   background-color: #fff;
@@ -33,7 +32,9 @@
 }
 
 .tt-menu {
-  width: 380px;
+max-height: 200px;
+overflow-y:auto;
+  width: 400px;
   margin: 12px 0;
   padding: 8px 0;
   background-color: #fff;
